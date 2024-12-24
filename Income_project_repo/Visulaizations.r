@@ -21,67 +21,8 @@ merged_data <- right_join(zip_shapefile, income_change, by = c("ZCTA5CE20" = "Zi
 # Check for any missing data after merging
 summary(merged_data$Household_Income_Change)
 
-median(merged_data$Household_Income_Change, na.rm= TRUE)
 
-# Create the map with a gradient scale from red to green based on Household_Income_Change
-ggplot(data = merged_data) +
-  geom_sf(aes(fill = Household_Income_Change)) +  # Use White_Income_Change for the fill color
-  scale_fill_gradient2(low = "red", high = "green",midpoint=0, space = "Lab", 
-                       name = "Income Change (%)") +
-  theme_minimal() +
-  theme(
-    legend.position = "right",  # Position the legend on the right
-    axis.text = element_blank(),  # Hide axis text
-    axis.title = element_blank()  # Hide axis titles
-  ) +
-  labs(title = "Household Income Change by Zipcode (2017 to 2022)", subtitle = "Red = Decrease, Green = Increase") +
-  
-  # Add labels to the map (displaying Zipcodes or other relevant variables)
-  geom_sf_text(aes(label = ZCTA5CE20 ), size = 1.8, color = "black", check_overlap = TRUE)  # Adjust size and color of labels
-  
-  
-  
-  
-  
-  
-  ggplot(data = merged_data) +
-  geom_sf(aes(fill = Household_Income_Change)) +  # Use Household_Income_Change for the fill color
-  scale_fill_gradient(low = "white", high = "green", space = "Lab", 
-                       name = "Income Change (%)") +  # Green only gradient, white to green
-  theme_minimal() +
-  theme(
-    legend.position = "right",  # Position the legend on the right
-    axis.text = element_blank(),  # Hide axis text
-    axis.title = element_blank()  # Hide axis titles
-  ) +
-  labs(title = "Household Income Change by Zipcode (2017 to 2022)", subtitle = "Green = Increase") +
-  
-  # Add labels to the map (displaying Zipcodes and Household_Income_Change)
-  geom_sf_text(aes(label = paste(ZCTA5CE20, "\n", round(Household_Income_Change, 2))), 
-               size = 2, color = "black", check_overlap = TRUE)  # Adjust size, color, and prevent overlap
-
-  
-  
-  
-  # Create the map with a gradient scale from red to green based on Household_Income_Change
-ggplot(data = merged_data) +
-  geom_sf(aes(fill = White_Income_Change)) +  # Use White_Income_Change for the fill color
-  scale_fill_gradient2(low = "red", high = "green", mid = "white", midpoint = 0, space = "Lab", 
-                       name = "Income Change (%)") +
-  theme_minimal() +
-  theme(
-    legend.position = "right",  # Position the legend on the right
-    axis.text = element_blank(),  # Hide axis text
-    axis.title = element_blank()  # Hide axis titles
-  ) +
-  labs(title = "Household Income Change by Zipcode (2017 to 2022)", subtitle = "Red = Decrease, Green = Increase") +
-  
-  # Add labels to the map (displaying Zipcodes or other relevant variables)
-  geom_sf_text(aes(label = ZCTA5CE20), size = 2, color = "black", check_overlap = TRUE) +  # Adjust size and color of labels
-  
-  # Group by Borough using facet_wrap (each borough gets its own map)
-  facet_wrap(~ Borough)  # This will create a map for each borough
-
+# Map visualizations for Every Combination of Demographics available
 
 columns_to_map <- c(
   "Household_Income_Change",
@@ -147,6 +88,8 @@ for (column in columns_to_map) {
   }
 }
 
+
+# Map Visualization of Citywide data for each Race
 ------------------------------------------------------------------------------------------
 output_dir_citywide <- "/Users/rahib/Data306/Income_project_repo/maps/citywide/"
 
